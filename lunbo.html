@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+.windows{
+  width:480px;
+  overflow:hidden;  
+}
+.images{
+  display:flex;
+  align-items:flex-start;
+  transition:all 0.5s;
+}
+.images img{
+}
+.red{
+  color:red;
+}
+    </style>
+  </head>
+  <body>
+    <div class='windows'> 
+      <div class='images' id='images'>
+        <img src="1.jpg" alt="" width='480px'/>
+        <img src="2.jpg" alt="" width='480px'/>
+        <img src="3.jpg" alt="" width='480px'/>
+      </div>
+      <div id='buttons'>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+  <script charset="utf-8">
+    var buttons = $('#buttons > span')
+  console.log(buttons)
+  for(var i=0; i<buttons.length;i++){
+    buttons.eq(i).on('click',function(x){
+    var index = $(x.currentTarget).index()
+    var p = index*-480
+    $('#images').css({transform:'translate('+ p + 'px)'})
+    n = index
+    changeClass(buttons.eq(n))
+    })
+  }
+  var n = 0
+  var buttonslength = buttons.length
+  playimg(n%buttonslength)
+  var timerId = setInterval(() =>{
+  n+=1
+  buttons.eq(n%buttonslength).trigger('click')
+  },2000)
+  $('.windows').on('mouseenter',function(){
+   window.clearInterval(timerId) 
+  })
+  $('.windows').on('mouseleave',function(){
+  timerId = setInterval(()=>{
+  n += 1
+ playimg(n%buttonslength)
+  },2000)
+  })
+
+ function changeClass ($buttons){
+    $buttons.addClass('red').siblings('.red').removeClass('red')
+ }
+function playimg(index){
+  buttons.eq(index).trigger('click')
+}
+
+
+
+
+
+
+
+</script>
+</html>
